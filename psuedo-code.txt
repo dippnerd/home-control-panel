@@ -1,0 +1,68 @@
+/*
+Basic idea is that any module just gets imported, so users can create their own without really needing to know anything about the other modules
+The menu system will just be an array that the user adds their module and icon to, the rest will be handled by the app
+The menu simply exists to tell React which Component to render, the component is otherwise completely self-reliant without talking to the others
+The individual Components can exist as their own file, just import them at the top of the main app and add them to the menu function
+The app will load one by default (weather) and the menu will exist as just one button with a home icon. Tap the icon and menu expands to show 
+whatever modules the user wants to add. 
+
+The import examples include things like lights, where you could just display available lights from some existing API (Hue or HomeKit for example), 
+rooms, where you could define devices grouped by room, Music which would be a remote control for iTunes or some other music app, 
+Video which could just be an iframe to a plex instance or a video picker for Netflix and other services (probably needs its own sub menu)
+The idea is there really shouldn't be limitations to what is displayed, just whatever can be implemented as a Component.
+May need to implement something for Music/Video to ensure they don't lose their state between renders
+*/
+
+//rough idea of code:
+
+import Weather from './weather';
+import Lights from './lights';
+import Rooms from './rooms';
+import Music from './itunes';
+import Video from './plex';
+
+const componentMap = {
+    weather: Weather,
+    lights: Lights,
+    rooms: Rooms,
+    music: Music,
+    video: Video
+};
+
+//may be able to ignore above componentMap if I can push all of the needed pieces into one object and build an array of those objects
+//then the menu would get build from this array, with the necessary component to render, label and icon for the menu
+const componentMenu = [
+    { label: 'Weather', component: Weather, icon: raindrop },
+    { label: 'Lights', component: Lights, icon: lightbulb },
+    { label: 'Rooms', component: Rooms, icon: door },
+    { label: 'Music', component: Music, icon: musicnote },
+    { label: 'Video', component: video, icon: film }
+];
+
+class App extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            component: "weather"
+        };
+    }
+
+    render() {
+        const { component } = this.state;
+
+        const Child = componentMap[component];
+        const Menu = 
+
+        return ( 
+            <div>
+                <Child />
+            </div>
+            <div>
+                <Menu />
+            </div>
+        );
+    }
+}
+
+export default App;
