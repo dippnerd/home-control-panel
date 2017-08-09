@@ -19,7 +19,8 @@ const componentMenu = [
 class ButtonList extends React.Component {
     handleClick = (e) => {
         //this.handleClick(e.iButton);
-        console.log("worked");
+        //console.log("worked");
+        alert("worked");
     }
 
     render() {
@@ -44,10 +45,10 @@ class ButtonList extends React.Component {
                     // bind the components onItemClick method
                     // and use the bind syntax that prepends 
                     // arguments to attach the item argument
-                    let boundItemClick = this.handleClick.bind(this, item);
-
+                    //let boundItemClick = this.handleClick.bind(this, item);
+                    //alert(item.id);
                     // Construct the onClick with our bound function
-                    return <button id={item.id} onClick={boundItemClick}>{item.label}</button>
+                    return <button id={item.id} onClick={() => this.props.handleClick(item)}>{item.label}</button>
                 })
             }
             </div>
@@ -67,17 +68,19 @@ class App extends Component {
 
     changeView = (name) => {
       this.setState({activeComponent: name});
+      alert(name);
     }
 
     render() {
         const activeComponent = this.state.activeComponent;
 
         const Child = componentMenu.find(r => r.id === activeComponent).component;
-
+        const childName = componentMenu.find(r => r.id === activeComponent).id;
+        alert(componentMenu.find(r => r.id === activeComponent).id);
         return ( 
             <div>
                 <Child /> 
-                <ButtonList handleClick={this.changeView("weather")} buttons={componentMenu} />
+                <ButtonList handleClick={() => this.changeView(childName)} buttons={componentMenu} />
             </div>
         );
     }
