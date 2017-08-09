@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import './App.css';
+import ButtonList from './ButtonList';
 
 import Weather from './Weather';
 import Lights from './Lights';
 import Rooms from './Rooms';
 import Music from './Music';
 import Video from './Video';
-
 
 const componentMenu = [
     { id: "weather", label: 'Weather', component: Weather, icon: 'raindrop' },
@@ -15,21 +15,6 @@ const componentMenu = [
     { id: "music", label: 'Music', component: Music, icon: 'musicnote' },
     { id: "video", label: 'Video', component: Video, icon: 'film' }
 ];
-
-class ButtonList extends React.Component {
-    render() {
-        var buttons = this.props.buttons;
-        return (
-            <div>
-            {
-                buttons.map((item) => {
-                    return <button id={item.id} onClick={() => this.props.handleClick(item.id)}>{item.label}</button>
-                })
-            }
-            </div>
-        );
-    }
-}
 
 class App extends Component {
     constructor(props) {
